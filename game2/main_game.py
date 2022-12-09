@@ -9,8 +9,8 @@ smoke_height = 50
 smoke_x = 0
 smoke_y = 750
 smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
-scene1 = False
-level1 = True
+scene1 = True
+level1 = False
 scene3 = False
 smoke_count = 0
 fps = 60
@@ -30,9 +30,7 @@ def run_game():
         global smoke_height
         global smoke_width
         global smoke_count
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                game = False  
+        # for event in pygame.event.get():
         if scene1:
             settings.bg_menu.blit_sprite(win)
             settings.play.blit_sprite(win)
@@ -42,7 +40,10 @@ def run_game():
             # settings.developers.draw_rect(win)
             # settings.exit.draw_rect(win)
             for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    game = False  
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    print(33333)
                     click = event.pos 
                     if settings.play.RECT.collidepoint(click):
                         print(1)
@@ -89,13 +90,12 @@ def run_game():
             sprite.mask.gravity(list_rect= area.list_rect)
             settings.lever.blit_sprite(win)
             settings.injured.blit_sprite(win)
-      
             for el in area.list_create_world:
                 el.blit_sprite(win)
             # if smoke_count == 50:
             #     # sprite.smoke.WIDTH += 50
             #     # sprite.smoke.HEIGHT += 50
-            #     print(1)
+            #     # print(1)
             #     smoke_width += 50
             #     smoke_height += 50
             #     # smoke_x += 20
@@ -103,7 +103,9 @@ def run_game():
             #     smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
             #     # smoke.blit_sprite(win)
             #     smoke_count = 0
-            smoke.blit_sprite(win)
+            # smoke.blit_sprite(win)
+            if sprite.sprite.RECT.colliderect(smoke.RECT):
+                print(2222222)
             pygame.display.flip()
         if scene3:
             settings.bg_developers.blit_sprite(win)
