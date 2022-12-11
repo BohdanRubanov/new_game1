@@ -2,7 +2,7 @@ import settings
 import pygame
 import area 
 import dicts 
-
+win = pygame.display.set_mode((dicts.SETTINGS_WIN["WIDTH"], dicts.SETTINGS_WIN["HEIGHT"]))
 class Sprite(settings.Settings):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -120,8 +120,40 @@ class Sprite(settings.Settings):
                 if self.RECT.colliderect(block) and block.y + block.height > self.RECT.y:
                     self.COUNT_JUMP = 41
                     self.ACTIVE_GRAVITY = True
+    def draw_text(self, win):
+        font = pygame.font.SysFont("kokila", 20)
+        follow = font.render("нажмите E что бы взаимодействовать с предметами!", 1, (0,0,0))
+        win.blit(follow, (100, 200))
 
-                    
+    def lever_collide(self, win):
+        event = pygame.key.get_pressed()
+        if self.RECT.x + self.RECT.width <= settings.lever.RECT.x + settings.lever.RECT.width + 20 and self.RECT.x + 20 >= settings.lever.RECT.x:
+            if self.RECT.y >= settings.lever.RECT.y + 20 and self.RECT.y + self.RECT.height <= settings.lever.RECT.y + settings.lever.RECT.height + 20:
+                self.draw_text(win)
+                if event[pygame.K_e]:
+                   pass
+    def mask_collide(self, win):
+        event = pygame.key.get_pressed()
+        if self.RECT.x + self.RECT.width <= mask.RECT.x + mask.RECT.width + 20 and self.RECT.x + 20 >= mask.RECT.x:
+            # print(5555)
+            print(self.RECT.y  + 21 >= mask.RECT.y, self.RECT.y + 21, mask.RECT.y)
+            if self.RECT.y + 21 >= mask.RECT.y and self.RECT.y + self.RECT.height <= mask.RECT.y + mask.RECT.height + 20:
+                self.draw_text(win)
+                # print(2222223333)
+                if event[pygame.K_r]:
+                    print(222222)
+                    self.NAME_IMAGE = "game2/images/sprite_with_injured.png"
+                    self.load_image()
+
+    def injured_collide(self):
+        event = pygame.key.get_pressed()
+        if self.RECT.x + self.RECT.width <= settings.injured.RECT.x + settings.injured.RECT.width + 20 and self.RECT.x + 20 >= settings.injured.RECT.x:
+            if self.RECT.y + 21 >= settings.injured.RECT.y and self.RECT.y + self.RECT.height <= settings.injured.RECT.y + settings.injured.RECT.height + 20:
+                self.draw_text(win)
+                if event[pygame.K_f]:
+                    self.NAME_IMAGE = "game2/images/sprite_with_injured.png"
+                    self.load_image()
+    
     # def jump(self, list_rect):
     #     event = pygame.key.get_pressed()
             
@@ -146,3 +178,4 @@ class Sprite(settings.Settings):
 sprite = Sprite(x = 330, y = 600, width = 50, height = 50, name_image = "game2/images/sprite.png")
 smoke = Sprite(x = 0, y = 750, width = 50, height = 50, name_image = "game2/images/smoke.png")
 mask = Sprite(x = 5, y = 5, width = 50, height = 50, name_image = "game2/images/mask.png")
+
