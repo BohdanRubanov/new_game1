@@ -44,6 +44,7 @@ def run_game():
                     game = False  
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     click = event.pos 
+                    print(click)
                     if settings.play.RECT.collidepoint(click):
                         print(1)
                         level1 = True
@@ -77,6 +78,9 @@ def run_game():
 
         if level1:
             for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click = event.pos 
+                    print(click)
                 if event.type == pygame.QUIT:
                     game = False  
             smoke_count += 1
@@ -96,31 +100,50 @@ def run_game():
             sprite.sprite.lever_collide(win)
             sprite.sprite.mask_collide(win)
             sprite.sprite.injured_collide()
+            sprite.sprite.draw_rect(win)
+            sprite.door.blit_sprite(win)
+            sprite.sprite.door_collide()
+            sprite.door_exit.blit_sprite(win)
+            sprite.sprite.door_exit_collide()
+            # sprite.door.open_door()
             # sprite.sprite.draw_text(win)
             for el in area.list_create_world:
                 el.blit_sprite(win)
 
-            # if smoke_count == 50:
-            #     # sprite.smoke.WIDTH += 50
-            #     # sprite.smoke.HEIGHT += 50
-            #     # print(1)
-            #     smoke_width += 50
-            #     smoke_height += 50
-            #     # smoke_x += 20
-            #     smoke_y -= 20
-            #     smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
-            #     # smoke.blit_sprite(win)
-            #     smoke_count = 0
+            if smoke_count == 50:
+                # sprite.smoke.WIDTH += 50
+                # sprite.smoke.HEIGHT += 50
+                # print(1)
+                smoke_width += 50
+                smoke_height += 50
+                # smoke_x += 20
+                smoke_y -= 20
+                smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
+                # smoke.blit_sprite(win)
+                smoke_count = 0
 
             smoke.blit_sprite(win)
             #условие смерти от дыма
+            sprite.sprite.position()
             x = sprite.sprite.RECT.x
             y = sprite.sprite.RECT.y
             sprite_cor = x,y
-            # if sprite.smoke.RECT.collidepoint(sprite_cor):
-            # if :
-            #     scene1 = True
-            #     level1 = False
+            if sprite.sprite.RECT.x + sprite.sprite.RECT.width <= smoke.RECT.x + smoke.RECT.width + 20 and sprite.sprite.RECT.x + 20 >= smoke.RECT.x:
+                if sprite.sprite.RECT.y + 21 >= smoke.RECT.y and sprite.sprite.RECT.y + sprite.sprite.RECT.height <= smoke.RECT.y + smoke.RECT.height + 20:
+                    if sprite.sprite.MASK_ON == True:
+                        pass
+                    else:
+                        smoke = sprite.Sprite(x = 0, y = 750, width = 50, height = 50, name_image = "game2/images/smoke.png")
+                        smoke_width = 50
+                        smoke_height = 50
+                        smoke_x = 0
+                        smoke_y = 750
+
+                        level1 = False
+                        scene1 = True
+                        smoke_count = 0
+            #           # print("touch")
+
             pygame.display.flip()
 
         if scene3:

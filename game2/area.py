@@ -10,7 +10,7 @@ world_h = 60
 list_world = [
     "000000000",
     "111000000",
-    "000011100",
+    "000011111",
     "000000100",
     "000110100",
     "000000100",
@@ -18,8 +18,8 @@ list_world = [
     "000100100",
     "000000100",
     "000001100",
-    "000100100",
-    "000000100",
+    "000100000",
+    "000000000",
     "111111111"
 ]
 list_create_world = []
@@ -44,7 +44,7 @@ def create_world(level):
                     name_image= ("game2/images/test_image.png")
                 )
                 list_create_world.append(area)
-                list_rect.append(area.RECT)
+                list_rect.append(area)
 
             x += world_w
         x = 0
